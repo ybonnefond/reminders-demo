@@ -10,6 +10,27 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "incremental": true
-  }
+    "incremental": true,
+
+    /* Strict Type-Checking Options */
+    "strict": true,
+
+    /* Additional Checks */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    /* Module Resolution Options */
+    "moduleResolution": "node",
+    "typeRoots": [
+      /* List of folders to include type definitions from. */
+      "node_modules/@types"
+    ],
+    "esModuleInterop": true,
+
+    "resolveJsonModule": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "./src/**/*",
+    "./test/**/*",
+  ]
 }
