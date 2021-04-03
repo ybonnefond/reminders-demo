@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ReminderService } from "./ReminderService";
-import { ReminderGateway } from "./ReminderGateway";
+import { ReminderGateway } from "./interfaces/ReminderGateway";
 
 @Module({
   providers: [
