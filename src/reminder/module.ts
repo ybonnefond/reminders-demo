@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ReminderService } from './domain/ReminderService';
 import { CreateReminderCommandHandler } from './interfaces/commands/CreateReminderCommandHandler';
+import { REMINDER_SERVICE } from "./di.symboles";
 
 @Module({
   providers: [
@@ -8,8 +9,11 @@ import { CreateReminderCommandHandler } from './interfaces/commands/CreateRemind
     CreateReminderCommandHandler,
 
     // Services
-    ReminderService,
+    {
+      provide: REMINDER_SERVICE,
+      useFactory: () => new ReminderService(),
+    }
   ],
-  exports: [ReminderService],
+  exports: [REMINDER_SERVICE],
 })
 export class ReminderModule {}

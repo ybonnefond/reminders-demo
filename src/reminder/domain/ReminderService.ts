@@ -1,7 +1,5 @@
-import { Injectable } from '@nestjs/common';
 import { Reminder } from './entities/Reminder';
 
-@Injectable()
 export class ReminderService {
   private readonly reminders: Reminder[] = [];
 

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-member-access */
 
 import { WsClient, testApp } from "../test";
-import { ReminderService } from "../src/reminder";
+import { REMINDER_SERVICE, ReminderService } from "../src/reminder";
 
 describe('createReminder', () => {
   let client: WsClient;
@@ -151,7 +151,7 @@ describe('createReminder', () => {
 
   beforeEach(async () => {
     client = testApp.app.get(WsClient);
-    service = testApp.app.get(ReminderService);
+    service = testApp.app.get(REMINDER_SERVICE);
     await service.removeAll();
   });
   afterAll(() => service.removeAll());
