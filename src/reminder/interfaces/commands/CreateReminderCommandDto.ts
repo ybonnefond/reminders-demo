@@ -1,6 +1,7 @@
 import { IsDateString, IsNotEmpty, IsString } from "class-validator";
+import { AbstractCommandDto } from "../../../commands";
 
-export class CreateReminderCommandDto {
+export class CreateReminderCommandDto implements AbstractCommandDto {
   @IsString()
   @IsNotEmpty()
   public name: string;

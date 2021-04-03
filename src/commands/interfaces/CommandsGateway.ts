@@ -1,21 +1,22 @@
 import { MessageBody, SubscribeMessage, WebSocketGateway } from "@nestjs/websockets";
-import { ReminderService } from "../ReminderService";
-import { CreateReminderCommandDto } from "./commands/CreateReminderCommandDto";
 import { UseFilters, UsePipes, ValidationPipe } from "@nestjs/common";
+import { CommandBus } from "@nestjs/cqrs";
+
 import { BadRequestExceptionFilter } from "./BadRequestExceptionFilter";
+import { CreateReminderCommandDto } from "../../reminder";
 
 @WebSocketGateway()
-export class ReminderGateway {
+export class CommandsGateway {
   constructor(
-    private service: ReminderService
+    private readonly commandBus: CommandBus,
   ) {}
 
 
-  @SubscribeMessage('createReminder')
+  @SubscribeMessage('command')
   @UseFilters(new BadRequestExceptionFilter())
   @UsePipes(new ValidationPipe({ transform: true }))
-  public async createReminder(@MessageBody() reminderDto: CreateReminderCommandDto): Promise<{ status: 'success' }> {
-    await this.service.createReminder(reminderDto);
+  public async handleCommand(@MessageBody() commandDto: CreateReminderCommandDto): Promise<{ status: 'success' }> {
+    await this.commandBus.execute(commandDto);
 
     return { status: 'success' };
   }

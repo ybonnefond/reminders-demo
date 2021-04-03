@@ -150,10 +150,10 @@
       });
     }
 
-    async createReminder(data) {
+    async sendCommand(data) {
       this.logger.debug('Creating reminder', data);
       try {
-        const response = await this.emit('createReminder', data);
+        const response = await this.emit('command', data);
         this.logger.success('Reminder created', response);
       } catch (e) {
         this.logger.error('Reminder creation error', e);
@@ -168,12 +168,12 @@
 
     await client.connect();
 
-    await client.createReminder(
-      { name: 'test', time: dayjs().add(2, 'second').toISOString() }
+    await client.sendCommand(
+      { type: 'createReminder', name: 'test', time: dayjs().add(2, 'second').toISOString() }
     );
 
-    await client.createReminder(
-      { time: dayjs().add(2, 'second').toISOString() }
+    await client.sendCommand(
+      { type: 'createReminder', time: dayjs().add(2, 'second').toISOString() }
     );
   })();
 </script>

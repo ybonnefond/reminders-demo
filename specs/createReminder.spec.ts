@@ -138,11 +138,15 @@ describe('createReminder', () => {
   }
 
   async function emitCommand(command: any) {
-    return await client.emit('createReminder', command);
+    return await client.emit('command', command);
   }
 
   function newValidCommand(): any {
-    return { name: 'test', time: new Date().toISOString() };
+    return {
+        type: 'createReminder',
+        name: 'test',
+        time: new Date().toISOString(),
+      };
   }
 
   beforeEach(async () => {
