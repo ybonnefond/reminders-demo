@@ -1,0 +1,71 @@
+<html>
+<head>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    td, th {
+      border: 1px solid #999;
+      padding: 0.5rem;
+      text-align: left;
+    }
+    th {
+      background: #e2e2e2;
+    }
+  </style>
+<script src="https://cdn.jsdelivr.net/npm/socket.io-client@2.4.0/dist/socket.io.slim.js"></script>
+<script>
+  const socket = io('http://localhost:3000');
+  socket.on('connect', function() {
+    log('Socket Connected');
+
+    const reminder = { name: 'test' };
+    log('create reminder', reminder);
+    socket.emit('createReminder', reminder, (response) => {
+      log('reminder created', response);
+    });
+
+  });
+
+  socket.on('exception', function(response) {
+    log('An exception occurred', response);
+  });
+  socket.on('disconnect', function() {
+    log('Socket Disconnected');
+  });
+
+  function log(message, data) {
+    const logs = document.getElementById("logs");
+
+    const cellDate = document.createElement('td');
+    const cellMessage = document.createElement('td');
+    const cellData = document.createElement('td');
+
+    cellDate.innerText = new Date().toLocaleString();
+    cellMessage.innerText = message;
+    cellData.innerText = typeof data !== 'undefined' ? JSON.stringify(data) : '';
+
+
+    const line = document.createElement('tr');
+    line.appendChild(cellDate);
+    line.appendChild(cellMessage);
+    line.appendChild(cellData);
+
+    logs.appendChild(line);
+  }
+</script>
+</head>
+
+<body>
+  <h2>Logs</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Time</th><th>Message</th><th>Data</th>
+      </tr>
+    </thead>
+    <tbody id="logs"></tbody>
+  </table>
+</body>
+</html>
