@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
 
 import { ReminderModule } from './reminder/module';
-import { CommandsModule } from './commands/module';
+import { GatewayModule } from './gateway/module';
 
 @Module({
   imports: [
@@ -10,7 +10,7 @@ import { CommandsModule } from './commands/module';
     ScheduleModule.forRoot(),
 
     // App modules
-    CommandsModule,
+    GatewayModule,
 
     // Domain Modules
     ReminderModule,

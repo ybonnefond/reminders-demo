@@ -3,6 +3,7 @@
   <style>
     table {
       border-collapse: collapse;
+      width: 80%;
     }
 
     td, th {
@@ -62,6 +63,7 @@
 </head>
 
 <body>
+<h1>Turbulent reminders</h1>
 <h2>Reminders</h2>
 <form id="reminder" class="form-inline">
   <label for="event">Remind me</label>
@@ -137,7 +139,7 @@
       line.appendChild(cellMessage);
       line.appendChild(cellData);
 
-      if (this.logs.childNodes.length > 10) {
+      if (this.logs.childNodes.length > 6) {
         this.logs.removeChild(this.logs.lastChild);
       }
 
@@ -218,11 +220,13 @@
     const client = new WsClient(logger);
 
     await client.connect();
-    client.on('reminder', (data) => logger.warn('Reminder', data))
+    client.on('reminder', (data) => {
+      alert(`Don't forget: ${data.name}`);
+      logger.warn('Reminder received', data)
+    })
 
     const form = document.getElementById("reminder");
 
-    // … et prenez en charge l'événement submit.
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
 

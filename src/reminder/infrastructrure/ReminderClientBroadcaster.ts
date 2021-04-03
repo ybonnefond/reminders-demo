@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { ClientBroadcaster, WebSocketClientBroadcaster } from '../../commands';
+import { ClientBroadcaster, WebSocketClientBroadcaster } from '../../gateway';
 import { Reminder, ReminderBroadcaster } from '../domain';
 
 @Injectable()

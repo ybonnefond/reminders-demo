@@ -6,10 +6,10 @@ import { REMINDER_SERVICE } from './di.symboles';
 
 import { ReminderClientBroadcaster } from './infrastructrure/ReminderClientBroadcaster';
 import { Scheduler } from './interfaces/scheduler';
-import { CommandsModule } from '../commands/module';
+import { GatewayModule } from '../gateway/module';
 
 @Module({
-  imports: [CommandsModule],
+  imports: [GatewayModule],
   providers: [
     Scheduler,
 

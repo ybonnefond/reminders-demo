@@ -15,7 +15,7 @@ interface WsServer {
 }
 
 @WebSocketGateway()
-export class CommandsGateway {
+export class Gateway {
   @WebSocketServer()
   private server: WsServer | undefined;
 
