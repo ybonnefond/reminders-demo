@@ -1,4 +1,4 @@
-import { testApp } from "./testApp";
+import { testApp } from './testApp';
 
 beforeAll(() => testApp.setup());
 afterAll(() => testApp.teardown());

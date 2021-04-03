@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ReminderService } from "./ReminderService";
-import { CreateReminderCommandHandler } from "./interfaces/commands/CreateReminderCommandHandler";
+import { ReminderService } from './domain/ReminderService';
+import { CreateReminderCommandHandler } from './interfaces/commands/CreateReminderCommandHandler';
 
 @Module({
   providers: [
@@ -10,6 +10,6 @@ import { CreateReminderCommandHandler } from "./interfaces/commands/CreateRemind
     // Services
     ReminderService,
   ],
-  exports: [ReminderService]
+  exports: [ReminderService],
 })
 export class ReminderModule {}

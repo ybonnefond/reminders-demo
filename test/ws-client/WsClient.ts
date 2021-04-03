@@ -1,5 +1,5 @@
-import { Injectable, OnApplicationShutdown } from "@nestjs/common";
-import io from "socket.io-client";
+import { Injectable, OnApplicationShutdown } from '@nestjs/common';
+import io from 'socket.io-client';
 
 @Injectable()
 export class WsClient implements OnApplicationShutdown {
@@ -16,11 +16,11 @@ export class WsClient implements OnApplicationShutdown {
 
   public async connect(uri: string) {
     this.socket = io(uri, {
-      autoConnect: false
+      autoConnect: false,
     });
 
     const connected = new Promise<void>((resolve) => {
-      this.getSocket().once('connect',  resolve);
+      this.getSocket().once('connect', resolve);
     });
 
     this.socket.connect();

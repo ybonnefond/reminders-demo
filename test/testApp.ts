@@ -1,10 +1,10 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '../src/app.module';
-import { WebsocketClientModule } from "./ws-client/module";
-import { WsClient } from "./ws-client/WsClient";
-import { Server } from "http";
-import { AddressInfo } from "net";
+import { WebsocketClientModule } from './ws-client/module';
+import { WsClient } from './ws-client/WsClient';
+import { Server } from 'http';
+import { AddressInfo } from 'net';
 
 export class TestApp {
   public app!: INestApplication;
@@ -32,10 +32,7 @@ export class TestApp {
 
   private async buildTestApp() {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [
-        WebsocketClientModule,
-        AppModule,
-      ],
+      imports: [WebsocketClientModule, AppModule],
     }).compile();
 
     const app = moduleFixture.createNestApplication();
