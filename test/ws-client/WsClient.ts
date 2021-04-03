@@ -9,7 +9,7 @@ export class WsClient implements OnApplicationShutdown {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public emit(name: string, data: any): Promise<void> {
     return new Promise((resolve) => {
-      this.getSocket().emit(name, data, resolve());
+      this.getSocket().emit(name, data, resolve);
     });
   }
 
