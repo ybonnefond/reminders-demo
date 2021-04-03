@@ -1,9 +1,9 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { Inject } from "@nestjs/common";
+import { Inject } from '@nestjs/common';
 
 import { CreateReminderCommandDto } from './CreateReminderCommandDto';
 import { Reminder, ReminderService } from '../../domain';
-import { REMINDER_SERVICE } from "../../di.symboles";
+import { REMINDER_SERVICE } from '../../di.symboles';
 
 @CommandHandler(CreateReminderCommandDto)
 export class CreateReminderCommandHandler

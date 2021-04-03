@@ -14,7 +14,6 @@ export class CommandDto {
   public command: Commands;
 
   constructor(command: Commands) {
-    console.log('INPUT COMMAND', command);
     this.command = command;
   }
 }

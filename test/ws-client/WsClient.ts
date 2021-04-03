@@ -7,10 +7,29 @@ export class WsClient implements OnApplicationShutdown {
 
   // Allow any in tests to test untrusted inputs
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public emit(name: string, data: any): Promise<void> {
+  public emit(event: string, data: any): Promise<void> {
     return new Promise((resolve) => {
       this.getSocket().once('exception', resolve);
-      this.getSocket().emit(name, data, resolve);
+      this.getSocket().emit(event, data, resolve);
+    });
+  }
+
+  public waitForEvent(event: string, timeout = 5000) {
+    return new Promise((resolve, reject) => {
+      const to = setTimeout(
+        () =>
+          reject(
+            new Error(
+              `Event ${event} not received within the ${timeout}ms timeout`,
+            ),
+          ),
+        timeout,
+      );
+
+      this.getSocket().once(event, (data: unknown) => {
+        clearTimeout(to);
+        resolve(data);
+      });
     });
   }
 

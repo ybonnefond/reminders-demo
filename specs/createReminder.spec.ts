@@ -1,8 +1,8 @@
 // Allow any in tests, cannot trust user inputs right? ;)
 /* eslint-disable @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-member-access */
 
-import { WsClient, testApp } from "../test";
-import { REMINDER_SERVICE, ReminderService } from "../src/reminder";
+import { WsClient, testApp } from '../test';
+import { REMINDER_SERVICE, ReminderService } from '../src/reminder';
 
 describe('createReminder', () => {
   let client: WsClient;
@@ -143,10 +143,10 @@ describe('createReminder', () => {
 
   function newValidCommand(): any {
     return {
-        type: 'createReminder',
-        name: 'test',
-        time: new Date().toISOString(),
-      };
+      type: 'createReminder',
+      name: 'test',
+      time: new Date().toISOString(),
+    };
   }
 
   beforeEach(async () => {

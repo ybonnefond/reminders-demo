@@ -13,12 +13,16 @@
     "ci": "yarn lint && yarn test:cov",
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "lint": "eslint \"{src,apps,libs,test,specs}/**/*.ts\" --fix",
+    "lint": "yarn lint:eslint && yarn lint:prettier",
+    "lint:fix": "yarn lint:eslint:fix && yarn lint:prettier:fix",
+    "lint:eslint": "eslint --cache --color '{src,test,specs}/**/*.ts'",
+    "lint:eslint:fix": "yarn lint:eslint --fix",
+    "lint:prettier": "yarn prettier -l '{src,test,specs}/**/*.{ts,md,json}'",
+    "lint:prettier:fix": "yarn lint:prettier --write",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
@@ -31,6 +35,7 @@
     "@nestjs/cqrs": "^7.0.1",
     "@nestjs/platform-express": "^7.0.0",
     "@nestjs/platform-socket.io": "^7.6.15",
+    "@nestjs/schedule": "^0.4.3",
     "@nestjs/websockets": "^7.6.15",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
@@ -44,6 +49,7 @@
     "@nestjs/cli": "^7.0.0",
     "@nestjs/schematics": "^7.0.0",
     "@nestjs/testing": "^7.0.0",
+    "@types/cron": "^1.7.2",
     "@types/express": "^4.17.3",
     "@types/jest": "26.0.22",
     "@types/node": "^14.14.37",
@@ -75,7 +81,7 @@
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "coverageDirectory": "../coverage",
+    "coverageDirectory": "coverage",
     "coveragePathIgnorePatterns": [
       "<rootDir>/test"
     ],
@@ -86,11 +92,10 @@
   },
   "lint-staged": {
     "*.{ts,js}": [
-      "yarn lint --fix",
-      "git add"
+      "yarn lint:fix"
     ],
     "*.{json,md}": [
-      "git add"
+      "yarn lint:prettier:fix"
     ]
   },
   "commitlint": {

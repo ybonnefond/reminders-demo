@@ -1,4 +1,5 @@
-import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
+import { IsDate, IsNotEmpty, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
 import { AbstractCommandDto } from '../../../commands';
 
 export class CreateReminderCommandDto implements AbstractCommandDto {
@@ -6,8 +7,9 @@ export class CreateReminderCommandDto implements AbstractCommandDto {
   @IsNotEmpty()
   public name: string;
 
-  @IsDateString()
+  @IsDate()
   @IsNotEmpty()
+  @Type(() => Date)
   public time: Date;
 
   constructor(name: string, datetime: Date) {
