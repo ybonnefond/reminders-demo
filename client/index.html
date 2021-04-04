@@ -1,9 +1,21 @@
 <html>
 <head>
   <style>
+    html {
+      background-color: #282828;
+      color: #e2e2e2;
+    }
+
+    #container {
+      width: 1000px;
+      margin: 30px auto;
+    }
+
     table {
       border-collapse: collapse;
-      width: 80%;
+      width: 100%;
+      color: #323232;
+      background-color: #bababa;
     }
 
     td, th {
@@ -14,6 +26,14 @@
 
     th {
       background: #e2e2e2;
+    }
+
+    th.time {
+      width: 140px;
+    }
+
+    th.message {
+      width: 250px;
     }
 
     .info {
@@ -48,44 +68,55 @@
       vertical-align: middle;
       margin: 5px 10px 5px 0;
       padding: 10px;
-      background-color: #fff;
+      background-color: #b7b7b7;
       border: 1px solid #ddd;
+    }
+
+    .form-inline input#sec {
+      width: 50px;
     }
 
     /* Style the submit button */
     .form-inline button {
       padding: 5px 10px;
       background-color: dodgerblue;
-      border: 1px solid #ddd;
+      border: 1px solid #5b5b5b;
       color: white;
+      margin-left: 10px;
     }
   </style>
 </head>
 
 <body>
-<h1>Turbulent reminders</h1>
-<h2>Reminders</h2>
-<form id="reminder" class="form-inline">
-  <label for="event">Remind me</label>
-  <input type="text" id="event" name="event">
+<div id="container">
+  <h1>Turbulent reminders</h1>
 
-  <label for="sec">in</label>
-  <input type="text" id="sec" name="sec"><span>&nbsp;seconds&nbsp;</span>
-  <button type="submit">Submit</button>
-</form>
-<hr>
+  <hr />
 
-<h2>Logs</h2>
-<table>
-  <thead>
-  <tr>
-    <th>Time</th>
-    <th>Message</th>
-    <th>Data</th>
-  </tr>
-  </thead>
-  <tbody id="logs"></tbody>
-</table>
+  <form id="reminder" class="form-inline">
+    <label for="event">Remind me</label>
+    <input type="text" id="event" name="event" value="that event">
+
+    <label for="sec">in</label>
+    <input type="text" id="sec" name="sec" value="3">
+    <span>seconds</span>
+    <button type="submit">Submit</button>
+  </form>
+
+  <hr />
+
+  <h2>Logs</h2>
+  <table>
+    <thead>
+    <tr>
+      <th class="time">Time</th>
+      <th class="message">Message</th>
+      <th>Data</th>
+    </tr>
+    </thead>
+    <tbody id="logs"></tbody>
+  </table>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2.4.0/dist/socket.io.slim.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dayjs"></script>
