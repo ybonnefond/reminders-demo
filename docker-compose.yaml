@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  front:
+    image: nginx
+    ports:
+      - 8080:80
+    volumes:
+      - ./client:/usr/share/nginx/html
+
+  back:
+    build: .
+    ports:
+      - 3000:3000

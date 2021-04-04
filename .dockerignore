@@ -1,0 +1,16 @@
+.husky/
+.idea/
+client/
+coverage/
+dist/
+logs/
+node_modules/
+
+.dockerignore
+.eslintcache
+.editorconfig
+.gitignore
+.nvmrc
+docker-compose.yaml
+Dockerfile*
+README.md
