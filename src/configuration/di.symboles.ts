@@ -1,0 +1,1 @@
+export const TYPEORM_NAMING_STRATEGY = Symbol.for('TYPEORM_NAMING_STRATEGY');

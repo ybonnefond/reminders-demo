@@ -10,7 +10,7 @@ describe('createReminder', () => {
 
   describe('Given I sent a valid reminder', () => {
     it('Then the reminder should be stored', async () => {
-      const command = newValidCommand();
+      const command = newValidCommand('valid');
       const response = await emitCommand(command);
       expectSucessfullResponse(response);
       await expectCountRemindersToBe(1);
@@ -21,7 +21,7 @@ describe('createReminder', () => {
     describe('And name is invalid', () => {
       describe('And name is not defined', () => {
         it('Then I should get an exception event with validation issues', async () => {
-          const command = newValidCommand();
+          const command = newValidCommand('invalid.name.undefined');
           delete command.name;
 
           const response = await emitCommand(command);
@@ -35,7 +35,7 @@ describe('createReminder', () => {
 
       describe('And name is not a string', () => {
         it('Then I should get an exception event with validation issues', async () => {
-          const command = newValidCommand();
+          const command = newValidCommand('invalid.name.not-string');
           command.name = true;
 
           const response = await emitCommand(command);
@@ -48,7 +48,7 @@ describe('createReminder', () => {
 
       describe('And name is empty', () => {
         it('Then I should get an exception event with validation issues', async () => {
-          const command = newValidCommand();
+          const command = newValidCommand('invalid.name.empty-string');
           command.name = '';
 
           const response = await emitCommand(command);
@@ -63,12 +63,11 @@ describe('createReminder', () => {
     describe('And time is invalid', () => {
       describe('And time is not defined', () => {
         it('Then I should get an exception event with validation issues', async () => {
-          const command = newValidCommand();
+          const command = newValidCommand('invalid.time.undefined');
           delete command.time;
 
           const response = await emitCommand(command);
           expectBadRequest(response, [
-            'time should not be empty',
             'time must be a valid ISO 8601 date string',
           ]);
           await expectCountRemindersToBe(0);
@@ -77,7 +76,7 @@ describe('createReminder', () => {
 
       describe('And time is not a string', () => {
         it('Then I should get an exception event with validation issues', async () => {
-          const command = newValidCommand();
+          const command = newValidCommand('invalid.name.not-string');
           command.time = true;
 
           const response = await emitCommand(command);
@@ -90,12 +89,11 @@ describe('createReminder', () => {
 
       describe('And time is empty', () => {
         it('Then I should get an exception event with validation issues', async () => {
-          const command = newValidCommand();
+          const command = newValidCommand('invalid.name.empty-string');
           command.time = '';
 
           const response = await emitCommand(command);
           expectBadRequest(response, [
-            'time should not be empty',
             'time must be a valid ISO 8601 date string',
           ]);
           await expectCountRemindersToBe(0);
@@ -104,7 +102,7 @@ describe('createReminder', () => {
 
       describe('And time is not a valid ISO date', () => {
         it('Then I should get an exception event with validation issues', async () => {
-          const command = newValidCommand();
+          const command = newValidCommand('invalid.name.invalid-iso-date');
           command.time = '24/12/2021 at midnight';
 
           const response = await emitCommand(command);
@@ -141,11 +139,12 @@ describe('createReminder', () => {
     return await client.emit('command', command);
   }
 
-  function newValidCommand(): any {
+  function newValidCommand(name: string): any {
+    const time = new Date(Date.now()).toISOString();
     return {
       type: 'createReminder',
-      name: 'test',
-      time: new Date().toISOString(),
+      name: `createReminder.${name}`,
+      time,
     };
   }
 

@@ -1,5 +1,6 @@
 import { Injectable, OnApplicationShutdown } from '@nestjs/common';
 import io from 'socket.io-client';
+import { CommandResponse } from '../../src/gateway';
 
 @Injectable()
 export class WsClient implements OnApplicationShutdown {
@@ -7,7 +8,7 @@ export class WsClient implements OnApplicationShutdown {
 
   // Allow any in tests to test untrusted inputs
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public emit(event: string, data: any): Promise<void> {
+  public emit(event: string, data: any): Promise<CommandResponse> {
     return new Promise((resolve) => {
       this.getSocket().once('exception', resolve);
       this.getSocket().emit(event, data, resolve);

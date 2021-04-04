@@ -1,10 +1,16 @@
-import { INestApplication } from '@nestjs/common';
-import { Test, TestingModule } from '@nestjs/testing';
-import { AppModule } from '../src/app.module';
-import { WebsocketClientModule } from './ws-client/module';
-import { WsClient } from './ws-client/WsClient';
 import { Server } from 'http';
 import { AddressInfo } from 'net';
+import { join } from 'path';
+
+import { INestApplication } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+
+import { WsClient } from './ws-client/WsClient';
+import { WebsocketClientModule } from './ws-client/module';
+import { AppModule } from '../src/app.module';
+
+import { Configuration } from '../src/configuration';
+import rimraf from "rimraf";
 
 export class TestApp {
   public app!: INestApplication;
@@ -25,19 +31,31 @@ export class TestApp {
   }
 
   public async teardown() {
+    // remove db file
+    rimraf.sync(this.getDbPath());
+
     if (this.app) {
       await this.app.close();
     }
   }
 
   private async buildTestApp() {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
+
+    const builder = Test.createTestingModule({
       imports: [WebsocketClientModule, AppModule],
-    }).compile();
+    })
+      .overrideProvider(Configuration)
+      .useValue(new Configuration({ DB_PATH: this.getDbPath() }));
 
-    const app = moduleFixture.createNestApplication();
+    const moduleFixture: TestingModule = await builder.compile();
 
-    return app;
+    return moduleFixture.createNestApplication();
+  }
+
+  private getDbPath() {
+    // Create one db by process.pid to ensure each run tests
+    // use its own db when multiple test suites run in parallel
+    return join(__dirname, 'test-db', `db-${process.pid}.sqlite`);
   }
 }
 
